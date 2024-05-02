@@ -20,7 +20,7 @@ from langchain.prompts import PromptTemplate
 from duckduckgo_search import DDGS
 import time
 # translation
-
+import copy
 # formatting
 import markdown2
 
@@ -44,7 +44,7 @@ class AIAgent() :
         except Exception as e :
             self.create_vectorstore_local()    # 로컬에 저장된 벡터스토어가 없으면 새롭게 생성합니다.
         self.create_vectorstore_list() # 로컬 벡터스토어 리스트를 생성합니다.
-        self.results = { # 결과물을 저장할 딕셔너리를 생성합니다.
+        self.basic_result_form = { # 결과물을 저장할 딕셔너리를 생성합니다.
             'title' : None, 
             'prologue' : None, 
             'keywords' : [], 
@@ -57,6 +57,7 @@ class AIAgent() :
             'documents' : [],             
             'html_for_upload' : None
         }
+        self.results = copy.deepcopy(self.basic_result_form)
     
 
     
@@ -427,7 +428,7 @@ For a 1-inch steak, place steak on a hot grill for 5 minutes. Turn and continue 
         chain = prompt | self.llm
         
         for topic in topics :
-            context = self.vectorstore_similarity_search(topic, score_threshold = score_threshold, k = k) # 참고자료를 불러옵니다
+            context = self.vectorstore_extract(topic, score_threshold = score_threshold, k = k) # 참고자료를 불러옵니다
             contents_bef_trans = chain.invoke({'context' : context, 'language' : language, 'topic' : topic, 'example': contents_example_1 + contents_example_2}).content             
             if save : self.results['contents_bef_trans'].append(contents_bef_trans) # 결과를 저장합니다.
 
@@ -485,18 +486,7 @@ For a 1-inch steak, place steak on a hot grill for 5 minutes. Turn and continue 
 
 
     def clear(self) :
-        self.results = { # 결과물을 저장할 딕셔너리를 생성합니다.
-                'title' : None, 
-                'prologue' : None, 
-                'keywords' : [], 
-                'theme' : None, 
-                'topics' : [], 
-                'contents' : [], 
-                'images' : [],            
-                'documents_urls' : [], 
-                'documents' : [],             
-                'html_for_upload' : None
-            }
+        self.results = copy.deepcopy(self.basic_result_form)
 
 
 
