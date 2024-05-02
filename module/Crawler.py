@@ -113,11 +113,15 @@ class Crawler():
         """셀레니움 드라이버를 초기화하고 크롬 인스턴스를 반환합니다.
         is_headless: 부울 값으로, True일 경우 헤드리스 모드로 크롬을 실행합니다.
         인스턴스 생성 시 자동 호출됩니다."""
-        chrome_options = Options() # 크롬 옵션을 설정합니다. 
+        chrome_options = Options() # 크롬 옵션을 설정합니다.         
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        # 사용자 에이전트 설정
+        user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+        chrome_options.add_argument(f"user-agent={user_agent}")
         if is_headless: # headless : 헤드리스 모드로 설정합니다. (눈에 보이는 크롬화면을 표시하지 않음으로써 리소스를 아낍니다.)
-            chrome_options.add_argument("--headless") 
-        service = Service(ChromeDriverManager().install()) # 컴퓨터에 깔려있는 크롬과 버전을 맞춥니다.
-        driver = webdriver.Chrome(service=service, options=chrome_options)  # 크롬을 실행시킵니다.               
+            chrome_options.add_argument("--headless")         
+        driver = webdriver.Chrome(options=chrome_options)  # 크롬을 실행시킵니다.               
         return driver # 크롬을 반환합니다.
 
     # 셀레니움 켜져있는지 확인

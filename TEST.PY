@@ -1,14 +1,10 @@
 # ✅todo : 1. colab 용으로 requirements.txt을 하나 더 만든다.
 # ✅ todo : 1. turnonselenium 내용을 colab용으로 추가한다.
 # todo : 1. blogger를 모듈화해서 사용하기 쉽게 만든다.
-# ✅todo : 1. os.environ도 반드시 포함시킨다.
 # ✅todo : 1. 쓰레딩 시키는 것도 함수화한다.
 # ✅todo : 1. 코랩은 쓰레딩 몇개를 시키는게 적당한지를 확인한다 = 2개 (2코어라서)
 # ✅todo : 1. 코랩크롤링 시에, user-agent 사용하도록 한다.
 # duckduckgo 대체품 찾기
-
-
-
 
 
 
@@ -232,3 +228,110 @@ class Blogger() :
                 uploading_minute_term = 120)  # 업로드 간격 (기본값 120분)
         finally :
             self.uploader.driver.quit() # 리소스 절약을 위한 드라이버 종료
+            # 경고를 무시합니다.
+import warnings
+warnings.filterwarnings("ignore")
+
+# 환경변수 저장 (.env) 확인
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv() 
+
+
+
+# blogger 클래스를 호출합니다.
+from module.Blogger import Blogger
+
+# 기본적인 환경설정을 합니다.
+isHeadless = True
+verbose = True
+
+# blogname = input('블로그 이름을 입력하세요 ')
+print('💛')
+statifi = Blogger(blogname = 'statifi', verbose = verbose, isHeadless = isHeadless)
+print('💛')
+kindmom = Blogger(blogname = 'kindmom', verbose = verbose, isHeadless = isHeadless)
+print('💛')
+sweetkiwi = Blogger(blogname = 'sweetkiwi', verbose = verbose, isHeadless = isHeadless)
+print('💛')
+takuz = Blogger(blogname = 'takuz', verbose = verbose, isHeadless = isHeadless)
+print('💛')
+morningbbobbo = Blogger(blogname = 'morningbbobbo', verbose = verbose, isHeadless = isHeadless)
+
+bloggers ={
+    "statifi" :statifi,
+    "kindmom" :kindmom,
+    "sweetkiwi" :sweetkiwi,
+    "takuz" :takuz,
+    "morningbbobbo" :morningbbobbo,
+}
+
+
+
+recommended = {
+    "건강과 웰빙": ["요가", "마인드풀니스", "웰니스 리트릿", "건강한 간식", "명상", "필라테스", "건강한 식단", "건강 추세", "힐링", "건강 검진"],
+    "기업과 기업가": ["기업가 정신", "크라우드펀딩", "비즈니스 모델 혁신", "기술 벤처", "벤처 투자", "스타트업 생태계"],
+    "재택 근무 및 자기 계발 블로그": ["재택 근무 팁", "자기계발 책 추천", "온라인 학습 플랫폼", "시간 관리 기술", "생산성 향상", "사이드 허슬", "재택 근무 환경", "프리랜서 가이드", "자기 관리", "모티베이션 증진"],
+    "건강 및 웰니스 블로그": ["건강한 식단", "정신 건강", "스트레스 관리", "홈 피트니스", "명상 기법", "웰니스 라이프스타일", "영양 정보", "건강 검진 가이드", "체중 관리", "건강한 습관"],
+    
+}
+
+
+
+# 가정 관리 및 DIY 프로젝트 블로그
+subjects_n_words_for_statifi = {"가정 관리 및 DIY 프로젝트 블로그": ["홈 데코 아이디어", "자동차 관리", "정원 가꾸기", "DIY 프로젝트", "가정 유지보수", "가구 제작", "집안 정리 팁", "에너지 효율 가이드", "안전한 집 만들기", "유아 교육 활동"] }
+# 음식 요리 
+subjects_n_words_for_kindmom = {"음식과 요리": ['미쉐린', '미슐랭', '블루리본', '100년가게', "베지테리언 레시피", "음식 트렌드", "음식 시장", "로컬 식당 탐방", "디톡스 요리", "수퍼푸드", "향토 음식", "음식 블로그", "쿠킹 클래스", "푸드 투어"], }
+# 여행
+subjects_n_words_for_sweetkiwi = {"디지털 노마드와 여행 블로그": ["디지털 노마드 팁", "글로벌 여행 가이드", "작업 효율성", "여행용 앱", "여행 예산 관리", "비자 가이드", "여행자 보험", "작업 공간 찾기", "문화 적응 팁", "소셜 미디어 마케팅"],  }
+# 인공지능, 
+subjects_n_words_for_takuz = {"인공지능": ["인공지능 응용", "머신 러닝", "데이터 분석", "딥 러닝 알고리즘", "핀테크", "에코테크", "소프트웨어 개발", "테크 리뷰"]}
+# 웰니스
+subjects_n_words_for_morningbbobbo = {"지속 가능한 생활 블로그": ["제로 웨이스트 팁", "지속 가능한 제품", "친환경 생활", "에코 라이프스타일", "환경 보호", "플라스틱 프리", "재사용 가능 제품", "친환경 홈 메이크오버", "지속 가능한 패션", "에너지 절약 팁"], }
+
+
+
+depth = 3
+save = True
+
+
+import threading
+
+def collect_keywords_for_blogger(blogger, subjects_n_words, depth, save):
+    print(f"Collecting keywords for {blogger.blogname}...")
+    blogger.collect_keywords(subjects_n_words=subjects_n_words, depth=depth, save=save)
+    print(f"Finished collecting keywords for {blogger.blogname}.")
+
+# 각 블로거의 주제 및 키워드 데이터
+bloggers = {
+    'statifi': statifi,
+    'kindmom': kindmom,
+    'sweetkiwi': sweetkiwi,
+    'takuz': takuz,
+    'morningbbobbo': morningbbobbo
+}
+
+subjects_n_words = {
+    'statifi': subjects_n_words_for_statifi,
+    'kindmom': subjects_n_words_for_kindmom,
+    'sweetkiwi': subjects_n_words_for_sweetkiwi,
+    'takuz': subjects_n_words_for_takuz,
+    'morningbbobbo': subjects_n_words_for_morningbbobbo
+}
+
+# 스레드 목록 생성
+threads = []
+
+# 각 블로거에 대해 스레드 생성 및 실행
+for blogger_name, blogger in bloggers.items():
+    thread = threading.Thread(target=collect_keywords_for_blogger, args=(blogger, subjects_n_words[blogger_name], depth, save))
+    threads.append(thread)
+    thread.start()
+
+# 모든 스레드의 완료를 기다림
+for thread in threads:
+    thread.join()
+
+print("All keyword collection tasks completed.")
