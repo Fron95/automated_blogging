@@ -1,14 +1,10 @@
 # ✅todo : 1. colab 용으로 requirements.txt을 하나 더 만든다.
 # ✅ todo : 1. turnonselenium 내용을 colab용으로 추가한다.
-# todo : 1. blogger를 모듈화해서 사용하기 쉽게 만든다.
-# ✅todo : 1. os.environ도 반드시 포함시킨다.
+# ✅todo : 1. blogger를 모듈화해서 사용하기 쉽게 만든다.
 # ✅todo : 1. 쓰레딩 시키는 것도 함수화한다.
 # ✅todo : 1. 코랩은 쓰레딩 몇개를 시키는게 적당한지를 확인한다 = 2개 (2코어라서)
 # ✅todo : 1. 코랩크롤링 시에, user-agent 사용하도록 한다.
 # duckduckgo 대체품 찾기
-
-
-
 
 
 
