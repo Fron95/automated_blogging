@@ -100,7 +100,6 @@ class AIAgent() :
 
         stored_keywords = self.vectorstore_list['data'].to_list()
         new_keywords = list(set(data) - set(stored_keywords))
-        
         ids = self.vectorstore.add_texts(new_keywords) # 벡터스토어에 텍스트를 추가합니다.
         self.vectorstore_list = pd.concat([self.vectorstore_list, pd.DataFrame({'data': new_keywords, 'id' : ids})], ignore_index=True) # 벡터스토어 리스트에 추가합니다.
         self.save_local_vectorstore() # 벡터스토어를 저장합니다.

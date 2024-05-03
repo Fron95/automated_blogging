@@ -82,30 +82,31 @@ class Uploader(Crawler) :
 
 
 
-    def selenium_send(self, tag_css_selector, content) :
-        self.is_selenium_turned_on()        
-        time.sleep(1) # 잠시 대기 (동적 콘텐츠 로딩을 위함)
-        WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, tag_css_selector)))
-        target = self.driver.find_element(By.CSS_SELECTOR, tag_css_selector)
-        self.driver.execute_script("arguments[0].style.display='block';", target)
-        target.send_keys(content)
+    # def selenium_send(self, tag_css_selector, content) :
+    #     self.is_selenium_turned_on()        
+    #     time.sleep(1) # 잠시 대기 (동적 콘텐츠 로딩을 위함)
+    #     WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, tag_css_selector)))
+    #     target = self.driver.find_element(By.CSS_SELECTOR, tag_css_selector)
+    #     self.driver.execute_script("arguments[0].style.display='block';", target)
+    #     target.send_keys(content)
 
-    def selenium_typing(self, tag_css_selector, content) :
-        self.is_selenium_turned_on()     
-        WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, tag_css_selector)))
-        actions = ActionChains(self.driver)
-        actions.send_keys(content)
-        actions.perform()
+    # def selenium_typing(self, tag_css_selector, content) :
+    #     self.is_selenium_turned_on()     
+    #     WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, tag_css_selector)))
+    #     self.selenium_click_action(tag_css_selector)
+    #     actions = ActionChains(self.driver)
+    #     actions.send_keys(content)
+    #     actions.perform()
     
-    def selenium_alert_handling(self, handling='dismiss') :
-        assert handling in ['accept', 'dismiss'], "handling은 'accept' 또는 'dismiss' 중 하나여야 합니다."
-        self.is_selenium_turned_on()        
-        try : # 
-            alert = self.driver.switch_to.alert             
-            alert.dismiss() if handling == 'dismiss' else alert.accept()
-        except Exception as e:
-            if self.verbose : print('at alert', e)
-            pass
+    # def selenium_alert_handling(self, handling='dismiss') :
+    #     assert handling in ['accept', 'dismiss'], "handling은 'accept' 또는 'dismiss' 중 하나여야 합니다."
+    #     self.is_selenium_turned_on()        
+    #     try : # 
+    #         alert = self.driver.switch_to.alert             
+    #         alert.dismiss() if handling == 'dismiss' else alert.accept()
+    #     except Exception as e:
+    #         if self.verbose : print('at alert', e)
+    #         pass
         
 
 

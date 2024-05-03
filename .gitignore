@@ -1,6 +1,7 @@
 venv
 .env
 
+tester/
 kindmom/
 sweetkiwi/
 statifi/

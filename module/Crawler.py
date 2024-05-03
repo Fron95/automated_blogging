@@ -113,15 +113,16 @@ class Crawler():
         """셀레니움 드라이버를 초기화하고 크롬 인스턴스를 반환합니다.
         is_headless: 부울 값으로, True일 경우 헤드리스 모드로 크롬을 실행합니다.
         인스턴스 생성 시 자동 호출됩니다."""
+        webdriver_service = Service()
         chrome_options = Options() # 크롬 옵션을 설정합니다.         
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
         # 사용자 에이전트 설정
-        user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+        user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.93 Safari/537.36"
         chrome_options.add_argument(f"user-agent={user_agent}")
         if is_headless: # headless : 헤드리스 모드로 설정합니다. (눈에 보이는 크롬화면을 표시하지 않음으로써 리소스를 아낍니다.)
             chrome_options.add_argument("--headless")         
-        driver = webdriver.Chrome(options=chrome_options)  # 크롬을 실행시킵니다.               
+        driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)  # 크롬을 실행시킵니다.               
         return driver # 크롬을 반환합니다.
 
     # 셀레니움 켜져있는지 확인
@@ -159,6 +160,32 @@ class Crawler():
             result = [element.text for element in elements if element.text != '']        
         # if self.verbose : print('✅ 스크래핑', len(result))
         return result
+
+    def selenium_send(self, tag_css_selector, content) :
+        self.is_selenium_turned_on()        
+        time.sleep(1) # 잠시 대기 (동적 콘텐츠 로딩을 위함)
+        WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, tag_css_selector)))
+        target = self.driver.find_element(By.CSS_SELECTOR, tag_css_selector)
+        self.driver.execute_script("arguments[0].style.display='block';", target)
+        target.send_keys(content)
+
+    def selenium_typing(self, tag_css_selector, content) :
+        self.is_selenium_turned_on()     
+        WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, tag_css_selector)))
+        self.selenium_click_action(tag_css_selector)
+        actions = ActionChains(self.driver)
+        actions.send_keys(content)
+        actions.perform()
+    
+    def selenium_alert_handling(self, handling='dismiss') :
+        assert handling in ['accept', 'dismiss'], "handling은 'accept' 또는 'dismiss' 중 하나여야 합니다."
+        self.is_selenium_turned_on()        
+        try : # 
+            alert = self.driver.switch_to.alert             
+            alert.dismiss() if handling == 'dismiss' else alert.accept()
+        except Exception as e:
+            if self.verbose : print('at alert', e)
+            pass
     
     def add_new_keyword(self, keywords, source, subject = None) :
         """수집되지 않았던 새로운 키워드를 수집한 경우 self.results에 해당 단어의 수집공간을 생성합니다.
