@@ -287,7 +287,7 @@ class AIAgent() :
     
     # 번역기
     def recursive_ddgtrans(self, text, from_lang = 'en', to_language='ko', max_chunk_size = 950):
-        from translate import Translator
+        
         """덕덕고 웹사이트의 번역기를 사용하여 한글로 번역합니다.
         줄바꿈을 기준으로 텍스트를 분리하여 줄단위로 번역을 수행합니다.
         그렇게 하는 이유는 번역 후에도 원래 글의 형태를 유지하기 위함입니다.

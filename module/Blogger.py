@@ -116,6 +116,7 @@ class Blogger() :
         # 무한반복 (반복횟수 미지정 시 벡터스토어 내에 키워드가 남지 않을 때까지 무한반복한다. 반복횟수 지정 시 해당 횟수만큼 반복하고 종료한다.)
         while True : 
             iteration += 1 # 반복횟수 1증가
+            if self.verbose : print(f"🌐 글을 작성할 키워드를 가지고 오는 중... ")
             random_keywords = self.keyword_ai.vectorstore.similarity_search('')
             if len(random_keywords) == 0 : # 벡터스토어 내에 키워드가 남지 않으면 종료
                 print('🟡 벡터스토어 내에 저장된 모든 키워드를 소진하였습니다. 고생하셨습니다.')
@@ -136,12 +137,13 @@ class Blogger() :
                 self.posting_ai.create_prologue(self.posting_ai.results['topics'], self.posting_ai.results['keywords'], save=True)     # 프롤로그 생성
                 self.posting_ai.create_title(self.posting_ai.results['topics'], self.posting_ai.results['keywords'], save=True)     # 제목 생성
                 # 자료수집
+                if self.verbose : print(f"🌐 글 관련 자료 수집 중 ... ")
                 for topic in self.posting_ai.results['topics'] :
                     documents, hrefs = self.crawler.ddgsearch_reducing(topic)    
                     self.posting_ai.results['documents_urls'].append(documents)
                     self.posting_ai.results['documents'].append(hrefs)
 
-                # 긁어들인 글들을 벡터스토어에 저장하기
+                # 긁어들인 글들을 벡터스토어에 저장하기                
                 collected_documents = []
                 for document in self.posting_ai.results['documents'] :
                     collected_documents.extend(document)
@@ -151,6 +153,7 @@ class Blogger() :
                 
 
                 # 글 작성
+                if self.verbose : print(f"🌐 글 작성 중 ... ")
                 self.posting_ai.create_content(
                     topics = self.posting_ai.results['topics'], 
                     language=contents_lan, 
@@ -160,15 +163,17 @@ class Blogger() :
 
                 # 이미지 수집하기    
                 topics = self.posting_ai.results['topics']
+                if self.verbose : print(f"🌐 이미지 수집 중 ... ")
                 for topic in topics : 
                     images = self.crawler.ddgsearch_get_images(topic, max_results = num_images)
                     self.posting_ai.results['images'].append(images)    
 
                 # 글 포맷팅하기
+                if self.verbose : print(f"🌐 글 형식화 중 ... ")
                 self.posting_ai.create_HTML_formmater(save=True)
 
                 # 결과저장하기
-
+                if self.verbose : print(f"🌐 글 저장 중 ... ")
                 # 수집 및 생성한 모든 자료를 json으로 저장합니다.
                 self.file_manager.saveGeneratedDict2Json(
                     data = self.posting_ai.results,
