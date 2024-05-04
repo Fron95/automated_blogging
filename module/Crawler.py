@@ -136,6 +136,18 @@ class Crawler():
         """셀레니움을 조작하여 해당 엔진의 검색창에 word를 검색한 상태의 페이지를 반환합니다."""
         self.is_selenium_turned_on() # 셀레니움이 켜져있는지 확인   
         self.driver.get(self.createURL(word, engine)) # 해당 엔진의 검색창에 word를 검색한 페이지로 이동합니다.
+    
+    def screenshot(self) :
+        """셀레니움의 현재 화면을 캡쳐하여 보여줍니다."""
+        from IPython.display import display, Image
+        import base64
+
+        # base64_image_string은 해당 함수에서 반환된 Base64 문자열입니다.
+        base64_image_string = self.driver.get_screenshot_as_base64()
+
+        # Base64 문자열을 이미지로 디코딩합니다.
+        image_data = base64.b64decode(base64_image_string)
+        display(Image(image_data))
 
     # 셀레니움 클릭이벤트 일으키기
     def selenium_click_action(self, tag_css_selector):
