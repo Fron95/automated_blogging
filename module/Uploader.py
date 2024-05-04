@@ -154,12 +154,17 @@ class Uploader(Crawler) :
         uploading_dates = self.generate_times(uploading_day, uploading_start_hour, uploading_minute_term, num_uploading)
         
         # 업로드 시작
-        self.is_selenium_turned_on()  # selenium이 켜져있는지 확인
+        self.is_selenium_turned_on()  # selenium이 켜져있는지 확인        
+        if self.verbose : print('💠페이지 접속')
         self.driver.get(self.new_post_url) # 새 글 작성 페이지로 이동
         # 1. 로그인
+        if self.verbose : print('💠카카오로그인 페이지 접속')
         self.selenium_click_action(kakao_login) # 카카오 로그인 버튼 클릭
+        if self.verbose : print('💠 아이디입력')
         self.selenium_send(kakao_id, self.id) # 아이디 입력
+        if self.verbose : print('💠 비밀번호 입력')
         self.selenium_send(kakao_pw, self.pw) # 비밀번호 입력
+        if self.verbose : print('💠 로그인 버튼 클릭')
         self.selenium_click_action(idpw_submit_button) # 로그인 버튼 클릭
         time.sleep(2) # 로그인 대기
         self.selenium_alert_handling('dismiss') # 알림창 닫기
@@ -181,17 +186,21 @@ class Uploader(Crawler) :
                 time.sleep(1)
                 self.selenium_alert_handling('dismiss') # 알림창 닫기        
                 time.sleep(1)
+                if self.verbose : print('💠 html 편집기 전환')
                 self.selenium_click_action(format_selector) # html selector 클릭                    
                 time.sleep(0.5)
                 self.selenium_click_action(html_format_option) # html option 클릭
                 self.selenium_alert_handling('accept') # 알림창 닫기        
                 time.sleep(0.5)
+                if self.verbose : print('💠 제목입력창 선택')
                 self.selenium_send(title_input, title) # 제목창 선택 및 입력                    
                 time.sleep(0.5)
+                if self.verbose : print('💠 내용입력 창 선택')
                 self.selenium_click_action(content) # 텍스트 창 선택 및 입력
                 self.selenium_typing(content, html_text) # 텍스트 창 선택 및 입력
                 # self.selenium_typing(content, "html_text")
                 time.sleep(0.5)
+                if self.verbose : print('💠 완료버튼 선택')
                 self.selenium_click_action(submit_button) # 완료 버튼        
                 time.sleep(0.5)
                 self.selenium_click_action(public_radio_button) # 공개 버튼
@@ -201,6 +210,7 @@ class Uploader(Crawler) :
                 self.tistory_selectDay(uploading_day) # 날짜 선택
                 time.sleep(0.5)
                 self.tistory_selectTime(uploading_hour, uploading_minute) # 시간 선택
+                if self.verbose : print('💠 최종제출')
                 time.sleep(0.5) # 최종 제출
                 self.selenium_click_action(finish_button)
                 if self.verbose : print("글생성완료",title)                    
