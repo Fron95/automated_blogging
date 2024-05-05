@@ -215,7 +215,12 @@ class Blogger() :
         upload_contents = [] # 업로드할 문서의 내용 컨테이너
         
         for filename in filenames[:num_contents_upload] :
-            _, _, title, _ = self.file_manager.extract_elements_from_filename(filename) # 파일명에서 제목 추출
+            # 파일명에서 제목 추출 (파일제목에 오류가 있을 경우 순서를 건너뜁니다.)
+            try :              
+              _, _, title, _ = self.file_manager.extract_elements_from_filename(filename) 
+            except Exception as e :
+              continue
+            
             text = self.file_manager.loadText2Text_w_filename(filename, 'for_upload') # 파일 내용 불러오기
 
             upload_titles.append(title) # 컨테이너에 제목 추가
