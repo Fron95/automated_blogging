@@ -195,7 +195,7 @@ class Crawler():
         try :  
             alert = self.driver.switch_to.alert             
             alert.dismiss() if handling == 'dismiss' else alert.accept()
-        except Exception as e:            
+        except Exception as e:                        
             pass
     
     def add_new_keyword(self, keywords, source, subject = None) :
