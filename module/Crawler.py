@@ -192,11 +192,10 @@ class Crawler():
     def selenium_alert_handling(self, handling='dismiss') :
         assert handling in ['accept', 'dismiss'], "handling은 'accept' 또는 'dismiss' 중 하나여야 합니다."
         self.is_selenium_turned_on()        
-        try : # 
+        try :  
             alert = self.driver.switch_to.alert             
             alert.dismiss() if handling == 'dismiss' else alert.accept()
-        except Exception as e:
-            if self.verbose : print('at alert', e)
+        except Exception as e:            
             pass
     
     def add_new_keyword(self, keywords, source, subject = None) :
