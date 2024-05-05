@@ -148,6 +148,16 @@ class Crawler():
         # Base64 문자열을 이미지로 디코딩합니다.
         image_data = base64.b64decode(base64_image_string)
         display(Image(image_data))
+    # 셀레니움 아래로 한 번 스크롤 하는 액션
+    def selenium_scroll_action(self, direction="down", num = 1) :
+        assert direction in ['down', 'up'], "direction은 'down' 또는 'up' 중 하나여야 합니다."
+        assert type(num) == int, "num은 정수여야 합니다."
+        
+        for _ in range(num) :            
+            if direction == "down" :
+                self.driver.find_element(By.CSS_SELECTOR,'body').send_keys(Keys.PAGE_DOWN)
+            elif direction == "up" :
+                self.driver.find_element(By.CSS_SELECTOR,'body').send_keys(Keys.PAGE_UP)
 
     # 셀레니움 클릭이벤트 일으키기
     def selenium_click_action(self, tag_css_selector):
