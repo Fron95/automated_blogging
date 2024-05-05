@@ -166,8 +166,8 @@ class Crawler():
         self.is_selenium_turned_on() # 셀레니움이 켜져있는지 확인        
         # if self.verbose : print(f"💬 스크래핑")
         elements = self.driver.find_elements(By.CSS_SELECTOR, tag_css_selector)   # 클릭하려는 태그를 선택합니다.
-        if get_attribute != None : # 텍스트 외 다른 속성값을 수집하고 싶다면
-            result = [element.get_attribute(get_attribute) for element in elements if element.text != '']        
+        if len(elements) != 0 and get_attribute != None : # 텍스트 외 다른 속성값을 수집하고 싶다면
+            result = [element.get_attribute(get_attribute) for element in elements]        
         else : # 텍스트를 수집하고 싶은 경우
             result = [element.text for element in elements if element.text != '']        
         # if self.verbose : print('✅ 스크래핑', len(result))
