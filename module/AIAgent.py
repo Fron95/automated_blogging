@@ -277,7 +277,7 @@ class AIAgent() :
         """제목을 생성합니다."""
         # 제목을 생성하기 위한 프롬프트입니다.
         prompt = ChatPromptTemplate.from_messages([
-            ('system', "You are an SEO expert. Create a suitable **KOREAN** blog post title (under 60 characters) considering the topics and keywords provided by the user. Ensure that the keywords are used in their original form to optimize the title for search engines.The title should be catchy and optimized for search engines."),
+            ('system', "You are an SEO expert. Create a suitable **KOREAN** blog post title (under 40 characters) considering the topics and keywords provided by the user. Ensure that the keywords are used in their original form to optimize the title for search engines.The title should be catchy and optimized for search engines."),
             ('human', f'Topics: {topics}'),
             ('human', f'Keywords: {keywords}')
         ])
