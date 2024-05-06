@@ -16,6 +16,7 @@ from module.File_manager import File_manager
 from module.Uploader import Uploader
 import copy
 
+
 class Blogger() :
     def __init__(self, blogname, verbose = False, isHeadless = True) :         
         self.blogname = blogname # 블로그 이름
@@ -47,7 +48,88 @@ class Blogger() :
         # self.screened_keywords = self.screened_keywords_info.keys().to_list()
         # self.suitable_keywords_info = self.file_manager.get_keywords(what_keywords='collected_keywords')
         # self.suitable_keywords = self.suitable_keywords_info.keys().to_list()
+    
+    # # 코랩전용 함수
+    # def whereami(self) :
+    #   path = os.getcwd()
+    #   print(path)
+    
+    # # 코랩전용 함수
+    # def save(self, filenames = None) :
+    #   from google.colab import drive
+    #   import os
+    #   import shutil
+    #   drive.mount('/content/drive')
+    #   # 원본 디렉토리 설정
+    #   source_dir = '/content'
+    #   # 대상 디렉토리 설정
+    #   target_dir = '/content/drive/MyDrive/blogging'
+    #   if filenames is None :
+    #     filenames = os.listdir(source_dir)
+    #   try :
+    #     filenames.remove('sample_data')
+    #     filenames.remove('drive')
+    #     filenames.remove('gdrive')
+    #   except :
+    #     pass
+    #   try :
+    #     filenames.remove('.config')
+    #   except :
+    #     pass
+    #   try :
+    #     filenames.remove('.git')
+    #   except :
+    #     pass
 
+
+    #   # '/content/' 디렉토리의 파일과 폴더 나열
+    #   for item in filenames:
+    #       print('now : ', item)
+    #       source_path = os.path.join(source_dir, item)
+    #       target_path = os.path.join(target_dir, item)
+
+    #       # 파일 또는 폴더를 Google 드라이브로 복사
+    #       if os.path.isfile(source_path):  # 파일인 경우
+    #           if os.path.exists(target_path):  # 대상 경로에 파일이 이미 있으면 덮어쓰기
+    #               os.remove(target_path)
+    #           shutil.copy(source_path, target_path)
+    #       elif os.path.isdir(source_path):  # 디렉토리인 경우
+    #           if os.path.exists(target_path):  # 대상 경로에 폴더가 이미 있으면 삭제 후 복사
+    #               shutil.rmtree(target_path)
+    #           shutil.copytree(source_path, target_path)
+
+    #   print("모든 파일이 Google 드라이브로 복사되었습니다.")
+    # # 코랩전용 함수
+    # def load(self, filenames = None) :
+    #   from google.colab import drive
+    #   import os
+    #   import shutil
+    #   drive.mount('/content/drive')
+    #   # 대상 디렉토리 설정 (이제 Colab의 로컬 디렉토리)
+    #   target_dir = '/content'
+    #   # 원본 디렉토리 설정 (Google 드라이브 내의 백업 폴더)
+    #   source_dir = '/content/drive/MyDrive/blogging'
+
+
+    #   # Google 드라이브의 파일과 폴더 나열
+    #   if filenames is None :
+    #     filenames = os.listdir(source_dir)
+    #   for item in filenames:
+    #       print('now : ', item)
+    #       source_path = os.path.join(source_dir, item)
+    #       target_path = os.path.join(target_dir, item)
+
+    #       # 파일 또는 폴더를 Colab 로컬로 복사
+    #       if os.path.isfile(source_path):  # 파일인 경우
+    #           if os.path.exists(target_path):  # 대상 경로에 파일이 이미 있으면 덮어쓰기
+    #               os.remove(target_path)
+    #           shutil.copy(source_path, target_path)
+    #       elif os.path.isdir(source_path):  # 디렉토리인 경우
+    #           if os.path.exists(target_path):  # 대상 경로에 폴더가 이미 있으면 삭제 후 복사
+    #               shutil.rmtree(target_path)
+    #           shutil.copytree(source_path, target_path)
+
+    #       print("모든 파일이 Google 드라이브에서 복원되었습니다.")
         
 
 
