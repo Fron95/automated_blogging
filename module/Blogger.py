@@ -55,7 +55,17 @@ class Blogger() :
         self.crawler.is_selenium_turned_on() # 셀레니움이 켜져있는지 확인합니다.
         try :
             # 키워드 수집에는 crawler 클래스 내에서 미리 정의되어 있는 반복문을 사용합니다.
-            self.crawler.iterate_keyword_crawling_w_multiple_subjects(depth = depth, subjects_n_words=subjects_n_words, save=save) 
+            # self.crawler.iterate_keyword_crawling_w_multiple_subjects(depth = depth, subjects_n_words=subjects_n_words, save=save) 
+            assert type(subjects_n_words) == dict, 'subjects_n_words must be dictionary (key : subject(str), value : list[words])'        
+            for subject, words in subjects_n_words.items() :
+                assert type(words) == list, 'words must be list'
+                assert len(words) > 0, 'words is required'
+                assert type(subject) == str, 'subject must be string'
+                self.crawler.iterate_keyword_crawling_w_single_subject(depth, words, subject, save)
+
+                if collected_keywords_save : self.file_manager.save_keywords('collected_keywords', self.crawler.results) # 수집한 전체키워드 정보 저장
+                if screened_keywords_save : self.file_manager.save_keywords('screened_keywords',  self.crawler.results ) # 선별한 키워드 정보 저장
+
         except Exception as e :
             print(e)
         finally : # 중단하더라도 현재진행시점까지가 로컬에 저장됩니다.
@@ -82,8 +92,15 @@ class Blogger() :
                 print('after interuption : screened_keywords = good')
 
             # 키워드 적정성 검사
-            if suitable_keywords_save :
+            if suitable_keywords_save :                
                 subjects = screened_keywords_info.loc[:,'subject'].to_list() # 키워드 적정성 검사를 위한 주제 리스트            
+                suitable_keywords = []
+
+                # for screened_word, subject in zip(screened_keywords, subjects) :
+                #     self.crawler.
+                #     suitable_keywords += self.keyword_ai.suitability_checker(subjects, screened_keywords)
+
+
                 suitable_keywords = self.keyword_ai.suitability_checker(subjects, screened_keywords) # 적정성 검사
                 suitable_keywords_info = screened_keywords_info.loc[suitable_keywords] # 적정성 검사 결과
                 # 수집한 전체 키워드 로컬환경에 csv파일로 저장            

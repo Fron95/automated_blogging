@@ -45,7 +45,6 @@ class Crawler():
             'daum_AD_special' : '#splinkColl .list_info.mg_cont.clear li', # 스페셜광고                        
             # 구글 컨텐츠 순서
             'google_contents_link' : 'div#rso.dURPMd  div.MjjYud a'# 구글 검색결과 링크 
-            
         }
         self.basic_format = {
             # 데이터 수집 시 사용할 기본 데이터 구조를 설정합니다.
@@ -55,7 +54,9 @@ class Crawler():
             "tistory_rank_at_google" : None,
             'all_links' : None,
             "top_tistory_at_google" : None,
-            'images':None
+            'images':None,
+            'depth' : None,
+            'from' : None
         }
         self.results = {} # 수집된 결과를 저장할 딕셔너리입니다.
     
@@ -350,6 +351,8 @@ class Crawler():
                     try:
                         self.crawl_suggest_keywords(new_keyword, engine, subject, save)
                         self.crawl_open_keywords(new_keyword, engine, subject, save)
+                        self.results[new_keyword]['depth'] = current_depth
+                        self.results[new_keyword]['from'] = new_keywords
                     except Exception as e:
                         print(f'Error occurred while crawling {new_keyword} on {engine}: {e}')
                         continue  # 실패한 키워드는 다시 시도하거나 로깅할 수 있습니다.
@@ -381,8 +384,7 @@ class Crawler():
         
 
     def iterate_keyword_crawling_w_multiple_subjects(self, depth, subjects_n_words, subject = None, save=True) :
-        assert type(subjects_n_words) == dict, 'subjects_n_words must be dictionary (key : subject(str), value : list[words])'
-        
+        assert type(subjects_n_words) == dict, 'subjects_n_words must be dictionary (key : subject(str), value : list[words])'        
         for subject, words in subjects_n_words.items() :
             assert type(words) == list, 'words must be list'
             assert len(words) > 0, 'words is required'
