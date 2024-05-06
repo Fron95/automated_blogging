@@ -296,7 +296,7 @@ class Crawler():
             rank, href, found = 1, '', False  # 티스토리 블로그의 순위, 링크, 발견 여부를 초기화합니다. 순번은 1부터 시작합니다.
             try :            
                 for link in links :                    
-                    if 'tistory.com' in link or 'naver.com' in link: # 수집한 링크에 tistory라는 이름이 포함되어 있는지 확인합니다.
+                    if ('tistory.com' in link) or ('naver.com' in link): # 수집한 링크에 tistory라는 이름이 포함되어 있는지 확인합니다.
                         href = link
                         found = True # 티스토리가 있으면 현재  순번을 반환합니다.
                         break# 티스토리 블로그 링크가 발견되면 순위를 기록하고 반복을 중단합니다.

@@ -51,7 +51,7 @@ class Blogger() :
         
 
 
-    def collect_keywords(self, subjects_n_words, depth, save=True) :
+    def collect_keywords(self, subjects_n_words, depth, save=True, collected_keywords_save = True, screened_keywords_save = True, suitable_keywords_save = True, vectorstore_save=True) :
         self.crawler.is_selenium_turned_on() # 셀레니움이 켜져있는지 확인합니다.
         try :
             # 키워드 수집에는 crawler 클래스 내에서 미리 정의되어 있는 반복문을 사용합니다.
@@ -67,40 +67,42 @@ class Blogger() :
             print('after interuption : good')
 
             # collected_keywords
-            collected_keywords_info = self.crawler.load_results() # 수집한 전체키워드 정보
-            collected_keywords = self.crawler.get_keywords() # 수집한 전체키워드 리스트
-            self.file_manager.save_keywords('collected_keywords', self.crawler.results) # 수집한 전체키워드 정보 저장
-            print('after interuption : collected_keywords = good')
+            if collected_keywords_save :
+                collected_keywords_info = self.crawler.load_results() # 수집한 전체키워드 정보
+                collected_keywords = self.crawler.get_keywords() # 수집한 전체키워드 리스트
+                self.file_manager.save_keywords('collected_keywords', self.crawler.results) # 수집한 전체키워드 정보 저장
+                print('after interuption : collected_keywords = good')
 
 
             # 키워드 선별
-            screened_keywords_info = self.crawler.load_processed_results() # 선별한 키워드 정보
-            screened_keywords = list(screened_keywords_info.index) # 선별한 키워드 리스트
-            self.file_manager.save_keywords('screened_keywords',  self.crawler.results ) # 선별한 키워드 정보 저장
-            print('after interuption : screened_keywords = good')
+            if screened_keywords_save :
+                screened_keywords_info = self.crawler.load_processed_results() # 선별한 키워드 정보
+                screened_keywords = list(screened_keywords_info.index) # 선별한 키워드 리스트
+                self.file_manager.save_keywords('screened_keywords',  self.crawler.results ) # 선별한 키워드 정보 저장
+                print('after interuption : screened_keywords = good')
 
             # 키워드 적정성 검사
-            subjects = screened_keywords_info.loc[:,'subject'].to_list() # 키워드 적정성 검사를 위한 주제 리스트            
-            suitable_keywords = self.keyword_ai.suitability_checker(subjects, screened_keywords) # 적정성 검사
-            suitable_keywords_info = screened_keywords_info.loc[suitable_keywords] # 적정성 검사 결과
-            print('after interuption : good3')
-            
-            # 클래스 내부 변수로 저장
-            self.collected_keywords_info = collected_keywords_info # 수집한 전체키워드 정보
-            self.collected_keywords = collected_keywords # 수집한 전체키워드 리스트
-            self.screened_keywords_info = screened_keywords_info # 선별한 키워드 정보
-            self.screened_keywords = screened_keywords# 선별한 키워드 리스트
-            self.suitable_keywords_info = suitable_keywords_info # 적정한 키워드 정보
-            self.suitable_keywords = suitable_keywords # 적정한 키워드 리스트
-            print('after interuption : good4')
-            
-            # 수집한 전체 키워드 로컬환경에 csv파일로 저장            
-            
-            self.file_manager.save_keywords('suitable_keywords', suitable_keywords_info.T.to_dict() ) # 적정한 키워드 정보 저장
+            if suitable_keywords_save :
+                subjects = screened_keywords_info.loc[:,'subject'].to_list() # 키워드 적정성 검사를 위한 주제 리스트            
+                suitable_keywords = self.keyword_ai.suitability_checker(subjects, screened_keywords) # 적정성 검사
+                suitable_keywords_info = screened_keywords_info.loc[suitable_keywords] # 적정성 검사 결과
+                # 수집한 전체 키워드 로컬환경에 csv파일로 저장            
+                self.file_manager.save_keywords('suitable_keywords', suitable_keywords_info.T.to_dict() ) # 적정한 키워드 정보 저장
+                print('after interuption : suitable_keywords = good')
+                
+            # # 클래스 내부 변수로 저장
+            # self.collected_keywords_info = collected_keywords_info # 수집한 전체키워드 정보
+            # self.collected_keywords = collected_keywords # 수집한 전체키워드 리스트
+            # self.screened_keywords_info = screened_keywords_info # 선별한 키워드 정보
+            # self.screened_keywords = screened_keywords# 선별한 키워드 리스트
+            # self.suitable_keywords_info = suitable_keywords_info # 적정한 키워드 정보
+            # self.suitable_keywords = suitable_keywords # 적정한 키워드 리스트
+            # print('after interuption : good4')
             
             
             # 키워드 벡터스토어 저장 (keyword_ai)            
-            self.keyword_ai.vectorstore_save_texts(suitable_keywords)
+            if vectorstore_save :
+                self.keyword_ai.vectorstore_save_texts(suitable_keywords)
 
     def create_contents(self, 
                         num_contents_creation = None, 
