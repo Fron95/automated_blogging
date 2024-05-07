@@ -7,6 +7,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.support import expected_conditions
 import time
 import copy
 import requests
@@ -159,6 +162,12 @@ class Crawler():
                 self.driver.find_element(By.CSS_SELECTOR,'body').send_keys(Keys.PAGE_DOWN)
             elif direction == "up" :
                 self.driver.find_element(By.CSS_SELECTOR,'body').send_keys(Keys.PAGE_UP)
+    
+    def selenium_wait_until_element_loaded(self, CSS_SELECTOR, duration=10):
+        ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
+        elements = WebDriverWait(self.driver, duration, ignored_exceptions=ignored_exceptions) \
+            .until(expected_conditions.presence_of_all_elements_located((By.CSS_SELECTOR, CSS_SELECTOR)))
+        return elements
 
     # 셀레니움 클릭이벤트 일으키기
     def selenium_click_action(self, tag_css_selector):

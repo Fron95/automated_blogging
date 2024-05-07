@@ -187,12 +187,15 @@ class Uploader(Crawler) :
                 self.selenium_alert_handling('dismiss') # 알림창 닫기        
                 time.sleep(1)
                 if self.verbose : print('💠 html 편집기 전환')
+                self.selenium_wait_until_element_loaded(format_selector)
                 self.selenium_click_action(format_selector) # html selector 클릭                    
                 time.sleep(0.5)
+                self.selenium_wait_until_element_loaded(html_format_option)
                 self.selenium_click_action(html_format_option) # html option 클릭
                 self.selenium_alert_handling('accept') # 알림창 닫기        
                 time.sleep(0.5)
                 if self.verbose : print('💠 제목입력창 선택')
+                self.selenium_wait_until_element_loaded(title_input)
                 self.selenium_send(title_input, title) # 제목창 선택 및 입력                    
                 time.sleep(0.5)
                 if self.verbose : print('💠 내용입력 창 선택')
@@ -201,8 +204,10 @@ class Uploader(Crawler) :
                 # self.selenium_typing(content, "html_text")
                 time.sleep(0.5)
                 if self.verbose : print('💠 완료버튼 선택')
+                
                 self.selenium_click_action(submit_button) # 완료 버튼        
                 time.sleep(0.5)
+                self.selenium_wait_until_element_loaded(public_radio_button)
                 self.selenium_click_action(public_radio_button) # 공개 버튼
                 time.sleep(0.5)
                 self.selenium_click_action(publish_date_on) # 예약 버튼
