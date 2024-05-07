@@ -68,6 +68,7 @@ class Marketer(Crawler) :
     def show_interaction_with_scroll(self, func, max_attempts=10, **kwargs):
         attempts = 0
         while attempts < max_attempts:
+            attempts += 1 
             try:
                 func(**kwargs)
                 break
@@ -110,6 +111,7 @@ class Marketer(Crawler) :
             elements = []
             attempts = 0
             while attempts < max_attempts and len(elements) == 0 :                
+                attempts += 1 
                 time.sleep(1)
                 try :
                     self.selenium_scroll_action('down' , 2)
@@ -184,6 +186,7 @@ class Marketer(Crawler) :
             elements = []
             attempts = 0
             while attempts < max_attempts and len(elements) == 0 :                
+                attempts += 1 
                 time.sleep(1)
                 try :
                     self.selenium_scroll_action('down' , 2)
