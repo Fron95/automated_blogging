@@ -143,6 +143,7 @@ class Marketer(Crawler) :
             
             attempts = 0
             while attempts < max_attempts:
+                attempts += 1 
                 try :
                     self.selenium_click_action(naver_selector_next_page)                    
                     break
@@ -150,7 +151,8 @@ class Marketer(Crawler) :
                     self.selenium_scroll_action('down', 4)
                     self.selenium_scroll_action('up', 3)           
                     if attempts >= max_attempts : 
-                        assert False, "다음 페이지 조회 실패"
+                        print(f"{page} 페이지에서 중단.")
+                        return self.result['review']
 
     def ohouse_review_crawling(self, link, max_page = 10, max_attempts=10) :
 
@@ -215,6 +217,7 @@ class Marketer(Crawler) :
             page += 1
             attempts = 0
             while attempts < max_attempts:
+                attempts += 1 
                 try :
                     self.selenium_click_action(ohouse_next_page_selector)                    
                     break
