@@ -183,7 +183,7 @@ class AIAgent() :
     def vectorstore_extract(self, query,  score_threshold = 0.55, k=16) :
         """벡터스토어에서 검색 결과를 추출합니다. vectorstore_similarity_search과는 달리 검색한 후에는 벡터스토어 내에서 해당 결과를 삭제합니다."""
         search_result = self.vectorstore_similarity_search(query, score_threshold, k) # 유사도 검색 결과를 불러옵니다.
-        if search_result is not None :
+        if len(search_result) != 0  :
             self.vectorstore_delete(search_result) # 검색 결과를 삭제합니다.
         return search_result
     

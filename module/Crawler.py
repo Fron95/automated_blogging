@@ -449,8 +449,12 @@ class Crawler():
         그 다음 해당 링크들로부터 본문을 수집합니다. 수집한 자료는 이후에 RAG에 활용합니다."""
         urls, contents = [], [] # 사이트 주소와 내용을 담을 컨테이너를 준비합니다.
         try:
-            results = DDGS().text(keyword, max_results=20) # 덕덕고에서 키워드와 관련된 링크를 수집합니다.
-            urls = [a['href'] for a in results if 'html' not in a['href'] and a['href'] != '']
+            selector = "c-doc-web > div > div.item-title > c-title > strong > a"
+            self.search(keyword, 'daum')            
+            self.selenium_wait_until_element_loaded(selector)
+            urls = self.selenium_crawling(selector, get_attribute='href')
+            # results = DDGS().text(keyword, max_results=20) # 덕덕고에서 키워드와 관련된 링크를 수집합니다.
+            # urls = [a['href'] for a in results if 'html' not in a['href'] and a['href'] != '']
         except Exception as e:
             print(f'{e} with {keyword}')
 
