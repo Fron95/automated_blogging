@@ -14,6 +14,7 @@ from module.Crawler import Crawler
 from module.AIAgent import AIAgent
 from module.File_manager import File_manager
 from module.Uploader import Uploader
+from datetime import datetime, timedelta
 import copy
 
 
@@ -302,7 +303,7 @@ class Blogger() :
                         break
 
 
-    def upload_contents(self, num_contents_upload = 15) :
+    def upload_contents(self, num_contents_upload = 15, uploading_day = (datetime.now() + timedelta(days=1)).day, , uploading_start_hour = 2, uploading_minute_term =  120) :
 
         assert len(os.getenv(f'{self.blogname}_ID')) > 0, '블로그 아이디를 환경변수에 등록하세요.'
         assert len(os.getenv(f'{self.blogname}_PW')) > 0, '블로그 비밀번호를 환경변수에 등록하세요.'
@@ -334,8 +335,8 @@ class Blogger() :
             self.uploader.tistory_upload(
                 titles = upload_titles, # 업로드할 전체 제목 목록
                 contents = upload_contents, # 업로드할 전체 내용 목록
-                # uploading_day 미 지정 시 내일 날짜 기준으로 업로드 ,
-                uploading_start_hour = 2, # 업로드 시작 시간 (기본값 2시)
-                uploading_minute_term = 120)  # 업로드 간격 (기본값 120분)
+                uploading_day  = uploading_day,
+                uploading_start_hour = uploading_start_hour, # 업로드 시작 시간 (기본값 2시)
+                uploading_minute_term = uploading_minute_term)  # 업로드 간격 (기본값 120분)
         finally :
             self.uploader.driver.quit() # 리소스 절약을 위한 드라이버 종료
