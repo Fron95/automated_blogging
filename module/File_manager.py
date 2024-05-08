@@ -24,10 +24,11 @@ import re
 class File_manager() :
     def __init__(self, 
     blogname,
-    parent_path = os.getcwd(),    
+    parent_path = os.path.join(os.getcwd(), 'bloggers'),    
     verbose = False) :        
         self.verbose = verbose
         self.blogname = blogname
+        self.parent_path = parent_path
         self.root_path = os.path.join(parent_path, blogname)        
         self.makeFolder(self.root_path)
         self.result_folder_path = os.path.join(self.root_path,'for_upload') # 결과물을 저장할 폴더 경로 설정

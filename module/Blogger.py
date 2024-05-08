@@ -26,8 +26,8 @@ class Blogger() :
         # 클래스 호출        
         self.file_manager = File_manager(blogname = blogname, verbose=verbose) # 파일 매니저
         self.crawler = Crawler(verbose=verbose, isHeadless=isHeadless) # 크롤러
-        self.posting_ai = AIAgent(index="my_contents", blogname=blogname  ,verbose=verbose) # 포스팅 AI
-        self.keyword_ai = AIAgent(index = "my_keywords", blogname=blogname, verbose=verbose) # 키워드 AI
+        self.posting_ai = AIAgent(index="my_contents", blogname=blogname, parent_path=self.file_manager.parent_path, verbose=verbose) # 포스팅 AI
+        self.keyword_ai = AIAgent(index = "my_keywords", blogname=blogname, parent_path=self.file_manager.parent_path, verbose=verbose) # 키워드 AI
         self.uploader = Uploader(
             blogname=blogname, # 아이디와 비밀번호, 포스팅URL을 지정하지 않으면 환경변수에서 가져옵니다.        
             verbose=verbose,
@@ -302,12 +302,21 @@ class Blogger() :
                     if iteration >= num_contents_creation :
                         break
 
-
-    def upload_contents(self, num_contents_upload = 15, uploading_day = (datetime.now() + timedelta(days=1)).day, , uploading_start_hour = 2, uploading_minute_term =  120) :
+    def upload_contents(self, num_contents_upload = 15, uploading_day = (datetime.now() + timedelta(days=1)).day, uploading_start_hour = 2, uploading_minute_term =  120) :
 
         assert len(os.getenv(f'{self.blogname}_ID')) > 0, '블로그 아이디를 환경변수에 등록하세요.'
         assert len(os.getenv(f'{self.blogname}_PW')) > 0, '블로그 비밀번호를 환경변수에 등록하세요.'
         assert len(os.getenv(f'{self.blogname}_NEW_POST_URL')) > 0, '블로그 포스팅URL를 환경변수에 등록하세요.'
+
+        print(f"""
+            🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐
+            uploading_day : {uploading_day}
+            uploading_start_hour : {uploading_start_hour}
+            uploading_minute_term : {uploading_minute_term}
+            🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐🌐
+            """
+        )
+
 
         self.uploader.is_selenium_turned_on() # 셀레니움이 켜져있는지 확인합니다.
         # 업로드 할 문서를 불러옵니다.
