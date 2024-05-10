@@ -154,13 +154,10 @@ class AIAgent() :
         if type(data) == str:
             data = [data]
         for d in data:
-            print("이거를 삭제하려고함", data)
-            print("여기5")
-            _id = self.vectorstore_list[self.vectorstore_list['data'] == d]['id'].to_list()[0]  # 데이터에 해당하는 id를 찾습니다.
-            print("여기6")
-            self.vectorstore.delete(ids=[_id])  # 벡터스토어에서 해당 id를 삭제합니다.
-            print("여기7")
-            self.vectorstore_list = self.vectorstore_list[self.vectorstore_list['data'] != d]  # 벡터스토어 리스트에서 해당 데이터를 삭제합니다.
+            _id = self.vectorstore_list[self.vectorstore_list['data'] == d]['id'].to_list()  # 데이터에 해당하는 id를 찾습니다.            
+            if len(id) > 0 :
+                self.vectorstore.delete(ids=_id)  # 벡터스토어에서 해당 id를 삭제합니다.
+                self.vectorstore_list = self.vectorstore_list[self.vectorstore_list['data'] != d]  # 벡터스토어 리스트에서 해당 데이터를 삭제합니다.
         
         # 인덱스를 0부터 다시 재설정합니다.
         self.vectorstore_list.reset_index(drop=True, inplace=True)
@@ -364,7 +361,7 @@ class AIAgent() :
         return translated_text
 
     # 본문내용생성
-    def create_content(self, topics, language='English', score_threshold=0.25, k=10, save=False) :
+    def create_content(self, topics, language='English', score_threshold=0.20 , k=10, save=False) :
         """ 본문내용을 생성합니다. 내용생성은 영어를 기본값으로 합니다. 내용의 풍성도 측면에서 영어가 훨씬 유리하기 때문입니다.
         만약, 곧바로 한글로 생성하고 싶다면 개별 주제의 내용이 다소 부실해질 수 있기 때문에 소주제를 3개가 아니라 5개 이상으로 늘려야 할 필요가 있습니다.
         관련도가 높더라도 너무 많은 참고자료를 전달하면 모델 성능이 저하되서 10개로 제한합니다.
