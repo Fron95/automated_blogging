@@ -234,7 +234,7 @@ class Blogger() :
             
             
             
-            
+                
                 self.posting_ai.create_topics(my_keywords, num_topic=num_topic, save=True)     # 소제목 3개 생성
                 self.posting_ai.create_prologue(self.posting_ai.results['topics'], self.posting_ai.results['keywords'], save=True)     # 프롤로그 생성
                 self.posting_ai.create_title(self.posting_ai.results['topics'], self.posting_ai.results['keywords'], save=True)     # 제목 생성
@@ -264,8 +264,8 @@ class Blogger() :
                     save=True)
 
                 # 이미지 수집하기    
-                topics = self.posting_ai.results['topics']
                 if self.verbose : print(f"🌐 이미지 수집 중 ... ")
+                topics = self.posting_ai.results['topics']
                 for topic in topics : 
                     images = self.crawler.ddgsearch_get_images(topic, max_results = num_images)
                     self.posting_ai.results['images'].append(images)    
@@ -294,6 +294,7 @@ class Blogger() :
             )
                 # 저장 후 self.posting_ai의 results 초기화.
                 self.posting_ai.clear()
+                self.posting_ai.vectorstore_clear()
             except Exception as e :
                 print(e)
                 continue

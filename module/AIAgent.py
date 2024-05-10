@@ -151,6 +151,7 @@ class AIAgent() :
         if type(data) == str:
             data = [data]
         for d in data:
+            print("이거를 삭제하려고함", data)
             _id = self.vectorstore_list[self.vectorstore_list['data'] == d]['id'].to_list()[0]  # 데이터에 해당하는 id를 찾습니다.
             self.vectorstore.delete(ids=[_id])  # 벡터스토어에서 해당 id를 삭제합니다.
             self.vectorstore_list = self.vectorstore_list[self.vectorstore_list['data'] != d]  # 벡터스토어 리스트에서 해당 데이터를 삭제합니다.
@@ -183,7 +184,8 @@ class AIAgent() :
     def vectorstore_extract(self, query,  score_threshold = 0.55, k=16) :
         """벡터스토어에서 검색 결과를 추출합니다. vectorstore_similarity_search과는 달리 검색한 후에는 벡터스토어 내에서 해당 결과를 삭제합니다."""
         search_result = self.vectorstore_similarity_search(query, score_threshold, k) # 유사도 검색 결과를 불러옵니다.
-        if len(search_result) != 0  :
+        if len(search_result) > 0  :
+            print("이거를 삭제하라 햇슴 :",search_result)
             self.vectorstore_delete(search_result) # 검색 결과를 삭제합니다.
         return search_result
     

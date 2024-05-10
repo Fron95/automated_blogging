@@ -232,9 +232,9 @@ class Marketer(Crawler) :
                         return self.result['review']
             
 
-    def ai_product_details(self, product, context) -> str  :
+    def ai_product_details(self, product, reviews=None) -> str  :
         
-        prompt = ChatPromptTemplate.from_messages([
+        messages = [
             ('human', """As a digital marketing expert, please provide a comprehensive breakdown
 of the key benefits and features in separate lists of {product}. Explain
 how these features address customer pain points and what makes this
@@ -243,13 +243,19 @@ testimonials, awards, or certifications associated with the product that
 can be leveraged to enhance credibility and trust among potential
 customers.
 """)
-        ])
+        ]
+
+        if reviews is not None :
+            messages.append(('system', f"""reviews about product : 
+                             {reviews}"""))
+        prompt = ChatPromptTemplate.from_messages(messages)
+       
         chain = prompt | self.llm
         response = chain.invoke({'product': product}).content
         return response
     
-    def ai_create_persona(self, product, context) -> str  :
-        prompt = ChatPromptTemplate.from_messages([
+    def ai_create_persona(self, product, reviews) -> str  :
+        messages = [
             ('human', """Act as an expert digital marketer. Please provide a comprehensive target
 audience persona for a digital marketer selling {product}. Include the
 following information: Demographics, Geographic location,
@@ -261,18 +267,25 @@ persona on general market trends and consumer behavior for this type of
 product. At the end, give me suggestions for different niches to target to
 best sell this product.
 """)
-        ])
+        ]
+        if reviews is not None :
+            messages.append(('system', f"""reviews about product : 
+                             {reviews}"""))
+        prompt = ChatPromptTemplate.from_messages(messages)
         chain = prompt | self.llm
         response = chain.invoke({'product': product}).content
         return response
     
-    def ai_update_persona_w_niche(self, niche, persona)  -> str :
-        prompt = ChatPromptTemplate.from_messages([
+    def ai_update_persona_w_niche(self, niche, persona, reviews = None)  -> str :
+        messages = [
             ('human', """Update the following target audience persona and aim it towards {niche}.
 {persona}
-
 """)
-        ])
+        ]
+        if reviews is not None :
+            messages.append(('system', f"""reviews about product : 
+                             {reviews}"""))
+        prompt = ChatPromptTemplate.from_messages(messages)
         chain = prompt | self.llm
         response = chain.invoke({'niche': niche, 'persona' : persona}).content
         return response
