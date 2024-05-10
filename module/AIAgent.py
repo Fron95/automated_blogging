@@ -100,9 +100,11 @@ class AIAgent() :
 
         stored_keywords = self.vectorstore_list['data'].to_list()
         new_keywords = list(set(data) - set(stored_keywords))
+        if len(new_keywords) < 1 : 
+            if self.verbose : print("⛔ 벡터스토어에 저장할 새로운 텍스트가 없습니다.")
+            return self.vectorstore_list
         
-        ids = self.vectorstore.add_texts(new_keywords) # 벡터스토어에 텍스트를 추가합니다.
-        
+        ids = self.vectorstore.add_texts(new_keywords) # 벡터스토어에 텍스트를 추가합니다.        
         self.vectorstore_list = pd.concat([self.vectorstore_list, pd.DataFrame({'data': new_keywords, 'id' : ids})], ignore_index=True) # 벡터스토어 리스트에 추가합니다.
         self.save_local_vectorstore() # 벡터스토어를 저장합니다.
         self.save_local_vectorstore_list()  # 벡터스토어 리스트를 저장합니다.
@@ -148,12 +150,16 @@ class AIAgent() :
     
     def vectorstore_delete(self, data):
         """벡터스토어에서 데이터를 삭제합니다."""
+        print("여기4")
         if type(data) == str:
             data = [data]
         for d in data:
             print("이거를 삭제하려고함", data)
+            print("여기5")
             _id = self.vectorstore_list[self.vectorstore_list['data'] == d]['id'].to_list()[0]  # 데이터에 해당하는 id를 찾습니다.
+            print("여기6")
             self.vectorstore.delete(ids=[_id])  # 벡터스토어에서 해당 id를 삭제합니다.
+            print("여기7")
             self.vectorstore_list = self.vectorstore_list[self.vectorstore_list['data'] != d]  # 벡터스토어 리스트에서 해당 데이터를 삭제합니다.
         
         # 인덱스를 0부터 다시 재설정합니다.
@@ -182,10 +188,14 @@ class AIAgent() :
 
     # 유사도검색 결과 삭제
     def vectorstore_extract(self, query,  score_threshold = 0.55, k=16) :
-        """벡터스토어에서 검색 결과를 추출합니다. vectorstore_similarity_search과는 달리 검색한 후에는 벡터스토어 내에서 해당 결과를 삭제합니다."""
+        """벡터스토어에서 검색 결과를 추출합니다. vectorstore_similarity_search과는 달리 검색한 후에는 벡터스토어 내에서 해당 결과를 삭제합니다."""        
+        print('여기1')
         search_result = self.vectorstore_similarity_search(query, score_threshold, k) # 유사도 검색 결과를 불러옵니다.
+        print('여기2')
+
         if len(search_result) > 0  :
             print("이거를 삭제하라 햇슴 :",search_result)
+            print('여기3')
             self.vectorstore_delete(search_result) # 검색 결과를 삭제합니다.
         return search_result
     
@@ -323,8 +333,6 @@ class AIAgent() :
                 continue
             
             # 한 줄의 길이가 최대청크크기를 초과하는 경우 줄을 최대 청크 크기에 맞게 나눕니다.
-            print("⛔번역할 때 줄을 나누는 과정에서 발생을 하는건가 ? :")
-            
             line_parts = [line[i:i + max_chunk_size] for i in range(0, len(line), max_chunk_size)]
             
             translated_line_parts = []
@@ -436,8 +444,7 @@ For a 1-inch steak, place steak on a hot grill for 5 minutes. Turn and continue 
         for topic in topics :            
             context = self.vectorstore_extract(topic, score_threshold = score_threshold, k = k) # 참고자료를 불러옵니다            
             contents_bef_trans = chain.invoke({'context' : context, 'language' : language, 'topic' : topic, 'example': contents_example_1 + contents_example_2}).content             
-            if save : self.results['contents_bef_trans'].append(contents_bef_trans) # 결과를 저장합니다.
-            print("⛔번역을 시키면 발생하는건가 ?")
+            if save : self.results['contents_bef_trans'].append(contents_bef_trans) # 결과를 저장합니다.            
             contents = self.recursive_ddgtrans(contents_bef_trans) # 번역기를 이용하여 한글로 번역합니다.            
             if save : self.results['contents'].append(contents) # 결과를 저장합니다.
         return contents

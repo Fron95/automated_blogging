@@ -241,9 +241,10 @@ class Blogger() :
                 # 자료수집
                 if self.verbose : print(f"🌐 글 관련 자료 수집 중 ... ")
                 for topic in self.posting_ai.results['topics'] :
-                    documents, hrefs = self.crawler.ddgsearch_reducing(topic)    
-                    self.posting_ai.results['documents_urls'].append(documents)
-                    self.posting_ai.results['documents'].append(hrefs)
+                    hrefs, documents = self.crawler.ddgsearch_reducing(topic)    
+                    # documents, hrefs = self.crawler.ddgsearch_reducing(topic)    
+                    self.posting_ai.results['documents_urls'].append(hrefs)
+                    self.posting_ai.results['documents'].append(documents)
 
                 # 긁어들인 글들을 벡터스토어에 저장하기                
                 collected_documents = []
