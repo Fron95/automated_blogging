@@ -72,7 +72,7 @@ class AIAgent() :
     def create_vectorstore_list(self) :
         """로컬 벡터스토어 리스트를 생성합니다."""
         try :
-            self.vectorstore_list = pd.read_csv(os.path.join(self.root_path, self.vectorstore_index, 'vector_list.csv'), encoding='cp949', index_col=0) # 로컬 벡터스토어 리스트를 불러옵니다.
+            self.vectorstore_list = pd.read_csv(os.path.join(self.root_path, self.vectorstore_index, 'vector_list.csv'), encoding='cp949', index_col=0, lineterminator='\n') # 로컬 벡터스토어 리스트를 불러옵니다.
         except FileNotFoundError :
             self.vectorstore_list = pd.DataFrame(columns = ['data', 'id']) # 파일이 없으면 새로운 데이터프레임을 생성합니다.
             self.save_local_vectorstore_list() # 생성된 데이터프레임을 저장합니다.

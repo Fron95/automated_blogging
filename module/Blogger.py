@@ -338,7 +338,7 @@ class Blogger() :
 
             upload_titles.append(title) # 컨테이너에 제목 추가
             upload_contents.append(text)   # 컨테이너에 내용 추가
-            self.file_manager.moveComplete(filename) # 제목과 내용 추출이 완료된 완료된 파일은 이동합니다.
+            
 
         if self.verbose : print(f"업로드 할 문서의 갯수는 {len(upload_contents)}개 입니다.")
         
@@ -351,3 +351,4 @@ class Blogger() :
                 uploading_minute_term = uploading_minute_term)  # 업로드 간격 (기본값 120분)
         finally :
             self.uploader.driver.quit() # 리소스 절약을 위한 드라이버 종료
+            self.file_manager.moveComplete(filename) # 제목과 내용 추출이 완료된 완료된 파일은 이동합니다.
