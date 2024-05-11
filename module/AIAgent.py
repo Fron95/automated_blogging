@@ -155,7 +155,7 @@ class AIAgent() :
             data = [data]
         for d in data:
             _id = self.vectorstore_list[self.vectorstore_list['data'] == d]['id'].to_list()  # 데이터에 해당하는 id를 찾습니다.            
-            if len(id) > 0 :
+            if len(_id) > 0 :
                 self.vectorstore.delete(ids=_id)  # 벡터스토어에서 해당 id를 삭제합니다.
                 self.vectorstore_list = self.vectorstore_list[self.vectorstore_list['data'] != d]  # 벡터스토어 리스트에서 해당 데이터를 삭제합니다.
         
