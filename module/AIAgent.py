@@ -215,7 +215,7 @@ class AIAgent() :
             attempts = 0  # 반복 횟수를 세기 위한 카운터
             while isSuitable not in ['yes', 'no'] and attempts < 10 : #LLM으로부터 yes 또는 no 대답이 나올 때까지 반복합니다. 최대 10회 반복합니다.
                 attempts += 1  # 카운터 증가                
-                isSuitable = self.llm.predict(f'{keyword} 가 {subject}에 관한 블로그에 적합한 토픽인가? 맞으면 "yes" 아니면 "no".')
+                isSuitable = self.llm.predict(f'{{keyword}}가 {{subject}}에 관한 블로그에 적합한 토픽인지 판단하고, 상호명이 포함되면 "no"를 반환합니다. 그렇지 않으면 "yes"를 반환합니다.')
             
             if isSuitable == 'yes':
                 suitable_keywords.append(keyword) # 'yes'라는 대답이 나오면은 적합한 키워드로 추가합니다. 

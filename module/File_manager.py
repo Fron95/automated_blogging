@@ -247,12 +247,15 @@ class File_manager() :
         if what_keywords == 'collected_keywords' :            
             self.saveGeneratedDict2CSV(data, self.blogname, 'ko', 'collected_keywords', 'storage')            
             self.saveGeneratedDict2Json(data, self.blogname, 'ko', 'collected_keywords', 'storage')            
+            if self.verbose : print(f"{self.blogname} : collected_keywords saved")
         if what_keywords == 'screened_keywords' :
             self.saveGeneratedDict2CSV(data, self.blogname, 'ko', 'screened_keywords', 'storage')            
             self.saveGeneratedDict2Json(data, self.blogname, 'ko', 'screened_keywords', 'storage')            
+            if self.verbose : print(f"{self.blogname} : screened_keywords saved")
         if what_keywords == 'suitable_keywords' :
             self.saveGeneratedDict2CSV(data, self.blogname, 'ko', 'suitable_keywords', 'storage')            
             self.saveGeneratedDict2Json(data, self.blogname, 'ko', 'suitable_keywords', 'storage')            
+            if self.verbose : print(f"{self.blogname} : suitable_keywords saved")
 
     # 키워드 파일 손쉽게 가져오기
     def get_keywords(self, what_keywords, to_pandas_DataFrame = True) :

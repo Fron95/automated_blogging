@@ -326,7 +326,56 @@ class Crawler():
                     self.save_results(word, 'top_tistory_at_google', href)  # 티스토리 링크를 저장합니다.
                     self.save_results(word, 'all_links', links)  # 모든 링크를 저장합니다.
 
-        
+
+    def iterate_keyword_crawling_w_single_subject_simple(self, depth, words, subject=None, save=True):
+
+        assert depth > 0, 'depth must be greater than 0'
+        assert len(words) > 0, 'words is required'
+
+        if type(words) == str:
+            words = [words]  # 단일 단어를 리스트로 변환
+
+        # 현재까지 수집된 키워드를 초기화합니다.
+        processed_keywords = set(copy.deepcopy(self.get_keywords()))
+        new_keywords = set(words)  # 시작할 새 키워드들을 설정합니다.
+
+        for current_depth in range(depth):
+            print(f'💛 Now  : Subject : ({subject}) Depth ({current_depth}) collected_keywords : ({len(self.get_keywords())})')  # 디버깅용 출력 (현재 depth)
+                        
+
+            # 다음 깊이에서 처리할 새 키워드를 저장할 임시 집합
+            next_new_keywords = set()
+
+            while new_keywords:
+                new_keyword = new_keywords.pop()
+                for engine in ['daum', 'google']:
+                    try:
+                        self.crawl_suggest_keywords(new_keyword, engine, subject, save)
+                        self.crawl_open_keywords(new_keyword, engine, subject, save)
+                        self.results[new_keyword]['depth'] = current_depth
+                        self.results[new_keyword]['from'] = new_keywords
+                    except Exception as e:
+                        print(f'Error occurred while crawling {new_keyword} on {engine}: {e}')
+                        continue  # 실패한 키워드는 다시 시도하거나 로깅할 수 있습니다.
+
+                # 다음 깊이에 사용할 새 키워드들을 추가합니다.
+                current_keywords = set(self.get_keywords())  # 현재까지 수집된 모든 키워드
+                new_discovered_keywords = current_keywords - processed_keywords
+                next_new_keywords.update(new_discovered_keywords)
+                
+
+                # 광고 수와 티스토리 순위를 수집합니다.
+                try:
+                    self.count_daum_ads(new_discovered_keywords, save)
+                    self.get_top_tistory_rank_n_link_at_google(new_discovered_keywords, save)
+                except Exception as e:
+                    print(f'Error occurred while collecting info for {new_keyword}: {e}')
+                
+                processed_keywords.update(new_discovered_keywords)
+                
+
+            # 다음 깊이를 위해 새 키워드 세트를 업데이트합니다.
+            new_keywords = next_new_keywords
     
     
     
@@ -348,13 +397,19 @@ class Crawler():
         new_keywords = set(words)  # 시작할 새 키워드들을 설정합니다.
 
         for current_depth in range(depth):
+            
             print(f'💛 Now  : Subject : ({subject}) Depth ({current_depth}) collected_keywords : ({len(self.get_keywords())})')  # 디버깅용 출력 (현재 depth)
                         
 
             # 다음 깊이에서 처리할 새 키워드를 저장할 임시 집합
             next_new_keywords = set()
-
+            num_investigation_keywords = len(new_keywords)
+            num_process = 0
             while new_keywords:
+                # 진행상황 표시해주기.
+                print(f'now : ({num_process}/{num_investigation_keywords}) processed.')
+                num_process += 1
+
                 new_keyword = new_keywords.pop()
                 for engine in ['daum', 'google']:
                     try:
