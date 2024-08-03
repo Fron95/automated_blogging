@@ -1,0 +1,924 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1273</width>
+    <height>1071</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QProgressBar" name="progressBar">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>970</y>
+      <width>231</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>104</number>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_start">
+    <property name="geometry">
+     <rect>
+      <x>1120</x>
+      <y>950</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:green;
+color:white;
+font-size:20px;
+</string>
+    </property>
+    <property name="text">
+     <string>수집시작</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_to_excel">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>950</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>엑셀다운로드</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_openFolder">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>950</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>다운로드 폴더 열기</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>1010</x>
+      <y>520</y>
+      <width>231</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>선택된 지역/물건</string>
+    </property>
+    <widget class="QListWidget" name="listWidget_selected">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>211</width>
+       <height>361</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_listwidget4_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>211</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>전체선택/해제</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_add">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>640</y>
+      <width>75</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>추가 ▶</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_delete">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>720</y>
+      <width>75</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>◀ 제거</string>
+    </property>
+   </widget>
+   <widget class="QSplitter" name="splitter_17">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>1231</width>
+      <height>491</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Orientation::Vertical</enum>
+    </property>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="styleSheet">
+      <string notr="true">font-size :15px;</string>
+     </property>
+     <property name="title">
+      <string>종류</string>
+     </property>
+     <widget class="QSplitter" name="splitter_16">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>681</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <widget class="QCheckBox" name="checkBox_realEstateType_APT">
+       <property name="text">
+        <string>아파트</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_realEstateType_ABYG">
+       <property name="text">
+        <string>아파트분양권</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_realEstateType_JGC">
+       <property name="text">
+        <string>재건축</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_realEstateType_OPST">
+       <property name="text">
+        <string>오피스텔</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_realEstateType_OBYG">
+       <property name="text">
+        <string>오피스텔분양권</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_realEstateType_JGB">
+       <property name="text">
+        <string>재개발</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_realEstateType_PRE">
+       <property name="text">
+        <string>분양중 / 예정</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="styleSheet">
+      <string notr="true">font-size:15px</string>
+     </property>
+     <property name="title">
+      <string>매매방식</string>
+     </property>
+     <widget class="QSplitter" name="splitter_4">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>201</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <widget class="QCheckBox" name="checkBox_tradeType_A1">
+       <property name="text">
+        <string>매매</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <property name="autoRepeat">
+        <bool>false</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_tradeType_B1">
+       <property name="text">
+        <string>전세</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QSlider" name="horizontalSlider">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>20</y>
+        <width>541</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="sliderPosition">
+       <number>0</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <property name="invertedControls">
+       <bool>false</bool>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::TickPosition::TicksBothSides</enum>
+      </property>
+      <property name="tickInterval">
+       <number>5</number>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="styleSheet">
+      <string notr="true">font-size :15px;</string>
+     </property>
+     <property name="title">
+      <string>매매가/분양가/전세가</string>
+     </property>
+     <widget class="QSpinBox" name="spinBox_minPrice">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>161</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="maximum">
+       <number>899999999</number>
+      </property>
+      <property name="singleStep">
+       <number>1000</number>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="spinBox_maxPrice">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>40</y>
+        <width>161</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="suffix">
+       <string/>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>900000000</number>
+      </property>
+      <property name="singleStep">
+       <number>1000</number>
+      </property>
+      <property name="value">
+       <number>900000000</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>50</y>
+        <width>201</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>(만원) (예시 : 10000 = 1억)</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>50</y>
+        <width>21</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>~</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_dealRange">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>20</y>
+        <width>411</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color : red;
+</string>
+      </property>
+      <property name="text">
+       <string>사용승인일 : ( ) ~ ( ) </string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_6">
+     <property name="styleSheet">
+      <string notr="true">font-size :15px;</string>
+     </property>
+     <property name="title">
+      <string>면적</string>
+     </property>
+     <widget class="QSplitter" name="splitter_10">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>30</y>
+        <width>731</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <widget class="QSplitter" name="splitter_11">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <widget class="QCheckBox" name="checkBox_area_10">
+        <property name="text">
+         <string>~10평대</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_area_20">
+        <property name="text">
+         <string>20평</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_area_30">
+        <property name="text">
+         <string>30평</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_area_40">
+        <property name="text">
+         <string>40평</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_area_50">
+        <property name="text">
+         <string>50평</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_area_60">
+        <property name="text">
+         <string>60평</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_area_70">
+        <property name="text">
+         <string>70평~</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="label_areaRange">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>10</y>
+        <width>411</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color : red;
+</string>
+      </property>
+      <property name="text">
+       <string>사용승인일 : ( ) ~ ( ) </string>
+      </property>
+     </widget>
+     <widget class="QSplitter" name="splitter_7">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>0</y>
+        <width>216</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_7">
+     <property name="styleSheet">
+      <string notr="true">font-size :15px;</string>
+     </property>
+     <property name="title">
+      <string>사용승인일</string>
+     </property>
+     <widget class="QSplitter" name="splitter_12">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>581</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <widget class="QSplitter" name="splitter_13">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <widget class="QCheckBox" name="checkBox_approvalDate_2">
+        <property name="text">
+         <string>2년</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_approvalDate_4">
+        <property name="text">
+         <string>4년</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_approvalDate_10">
+        <property name="text">
+         <string>10년</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_approvalDate_15">
+        <property name="text">
+         <string>15년</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_approvalDate_20">
+        <property name="text">
+         <string>20년</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_approvalDate_25">
+        <property name="text">
+         <string>25년</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_approvalDate_30">
+        <property name="text">
+         <string>30년~</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="label_approvalDateRange">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>20</y>
+        <width>411</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color : red;
+</string>
+      </property>
+      <property name="text">
+       <string>사용승인일 : ( ) ~ ( ) </string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_8">
+     <property name="styleSheet">
+      <string notr="true">font-size :15px;</string>
+     </property>
+     <property name="title">
+      <string>세대수</string>
+     </property>
+     <widget class="QLabel" name="label_totalHouseholdsRange">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>10</y>
+        <width>411</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color : red;
+</string>
+      </property>
+      <property name="text">
+       <string>사용승인일 : ( ) ~ ( ) </string>
+      </property>
+     </widget>
+     <widget class="QSplitter" name="splitter_14">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>571</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <widget class="QCheckBox" name="checkBox_totalHouseholds_100">
+       <property name="text">
+        <string>~100</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_totalHouseholds_300">
+       <property name="text">
+        <string>300</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_totalHouseholds_500">
+       <property name="text">
+        <string>500</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_totalHouseholds_700">
+       <property name="text">
+        <string>700</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_totalHouseholds_1000">
+       <property name="text">
+        <string>1000</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_totalHouseholds_1500">
+       <property name="text">
+        <string>1500</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_totalHouseholds_2001">
+       <property name="text">
+        <string>2000~</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QSplitter" name="splitter_18">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>520</y>
+      <width>901</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Orientation::Horizontal</enum>
+    </property>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>지역선택</string>
+     </property>
+     <widget class="QSplitter" name="splitter">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>0</width>
+        <height>361</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <widget class="QSplitter" name="splitter_2">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <widget class="QSplitter" name="splitter_3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QSplitter" name="splitter_5">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>871</width>
+        <height>73</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <widget class="QListWidget" name="listWidget_1">
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string extracomment="뭔데">111</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QListWidget" name="listWidget_2">
+       <property name="contextMenuPolicy">
+        <enum>Qt::ContextMenuPolicy::PreventContextMenu</enum>
+       </property>
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="listWidget_3">
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="listWidget_4"/>
+     </widget>
+     <widget class="QSplitter" name="splitter_6">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>340</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <widget class="QPushButton" name="pushButton_listwidget1">
+       <property name="text">
+        <string>전체선택/해제</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_listwidget2">
+       <property name="text">
+        <string>전체선택/해제</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_listwidget3">
+       <property name="text">
+        <string>전체선택/해제</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_listwidget4">
+       <property name="text">
+        <string>전체선택/해제</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QComboBox" name="comboBox">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>220</y>
+        <width>241</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>새 항목</string>
+       </property>
+      </item>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>970</y>
+      <width>281</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 9pt &quot;나눔스퀘어OTF_ac&quot;;</string>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:700; text-decoration: underline;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>950</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1273</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>네이버부동산</string>
+    </property>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
