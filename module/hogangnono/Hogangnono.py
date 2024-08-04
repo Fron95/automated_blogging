@@ -88,12 +88,14 @@ class Hogangnono:
         self.data_folder = os.path.join(self.root_folder, 'data')
         self.info_folder = os.path.join(self.data_folder, 'info')
         self.real_trade_folder = os.path.join(self.data_folder, 'real_trade')
+        self.monthly_real_trade_folder = os.path.join(self.data_folder, 'monthly_real_trade')
 
         # 폴더가 없으면 생성
         os.makedirs(self.root_folder, exist_ok=True)
         os.makedirs(self.data_folder, exist_ok=True)
         os.makedirs(self.info_folder, exist_ok=True)
         os.makedirs(self.real_trade_folder, exist_ok=True)
+        os.makedirs(self.monthly_real_trade_folder, exist_ok=True)
 
         # 단일파일경로
         self.apts_path = os.path.join(self.data_folder, '호갱노노.csv')
@@ -669,6 +671,90 @@ class Hogangnono:
 
         # # 합쳐진 데이터프레임을 반환합니다.
         # len(merged_df)
+
+
+    def get_valid_areaNo(self, id) :
+
+        # info에서 가져오기
+        
+        sample_info = hgnn.open_json_file(os.path.join(hgnn.info_folder,f"{id}.json" ))
+        valid_areaNo = []
+        for key, val in sample_info['altState']['AptDongStore']['areaListPyMap'].items() :
+            valid_areaNo.append(val[0]['merged_no'])
+        return valid_areaNo
+
+ 
+    def fetch_monthly_real_trade_single_areaNo(self, id, areaNo, save = True) :
+        
+
+        cookies = {
+            'bat': 'B-VEzEDDnAr6CcP6k_SI0s2QqZ78PHXDpJkw',
+            '_gcl_au': '1.1.1543066674.1719753966',
+            '_fbp': 'fb.1.1719753965794.820917726471047565',
+            '_gid': 'GA1.2.494390124.1722309366',
+            '_wp_uid': '1-821aee09be2ee8d0af9029b7e4a8355c-s1711704073.904983|windows_10|chrome-2ui902',
+            'connect.sid': 's%3Arwnuvn9K3g-L-djMXGEeKH665-uLaDd21w.ebMI3rwxedV%2FtLZUjGFH%2BY26fY6kvw7FHyxk5k92%2BQ4',
+            'client.cid': 'ebMI3rwxedV%2FtLZUjGFH%2BY26fY6kvw7FHyxk5k92%2BQ4',
+            '_ga': 'GA1.2.1496764594.1719753966',
+            'cto_bundle': 'Ndv21F84WlQwJTJCZTBFYUZ4RlglMkJQdXJhMCUyQjRmT0JEdG5qTXBGRVQzekZwZDViRW1GcVc5dDhWZWJhJTJGd0JxeVBOMXZaSnRjMnhvRDdEMVVWUkk4YWpXV2IzR3NjYnJOYWxTUU5Qa0RCS0FkQnpSSTVwZ0NMQkRvcUFGJTJGWTZRR0pSMnV0SXp1OGdxcjlFeUdxSmpMQjhHeVZ0dFp6RzQxZ2swZVdpc201eERvWWtWVFVHNkVMYmxzSnZaa09BVmhPTVpaQXVaaHJueCUyRjNpazRmRGFLSlozdEZ0YXJlWWQ3ekJRNGNjMnRzQnZHUDZGNHFoSWMwc3ZUUjlmVjZTVlhYVjJHN2x4UnExZ2EwV1F4bVNoNVBSQU8xdnVIUSUzRCUzRA',
+            '_ga_P8RWS72S79': 'GS1.1.1722773230.70.1.1722774327.0.0.0',
+        }
+
+        headers = {
+            'accept': 'application/json',
+            'accept-language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
+            # 'cookie': 'bat=B-VEzEDDnAr6CcP6k_SI0s2QqZ78PHXDpJkw; _gcl_au=1.1.1543066674.1719753966; _fbp=fb.1.1719753965794.820917726471047565; _gid=GA1.2.494390124.1722309366; _wp_uid=1-821aee09be2ee8d0af9029b7e4a8355c-s1711704073.904983|windows_10|chrome-2ui902; connect.sid=s%3Arwnuvn9K3g-L-djMXGEeKH665-uLaDd21w.ebMI3rwxedV%2FtLZUjGFH%2BY26fY6kvw7FHyxk5k92%2BQ4; client.cid=ebMI3rwxedV%2FtLZUjGFH%2BY26fY6kvw7FHyxk5k92%2BQ4; _ga=GA1.2.1496764594.1719753966; cto_bundle=Ndv21F84WlQwJTJCZTBFYUZ4RlglMkJQdXJhMCUyQjRmT0JEdG5qTXBGRVQzekZwZDViRW1GcVc5dDhWZWJhJTJGd0JxeVBOMXZaSnRjMnhvRDdEMVVWUkk4YWpXV2IzR3NjYnJOYWxTUU5Qa0RCS0FkQnpSSTVwZ0NMQkRvcUFGJTJGWTZRR0pSMnV0SXp1OGdxcjlFeUdxSmpMQjhHeVZ0dFp6RzQxZ2swZVdpc201eERvWWtWVFVHNkVMYmxzSnZaa09BVmhPTVpaQXVaaHJueCUyRjNpazRmRGFLSlozdEZ0YXJlWWQ3ekJRNGNjMnRzQnZHUDZGNHFoSWMwc3ZUUjlmVjZTVlhYVjJHN2x4UnExZ2EwV1F4bVNoNVBSQU8xdnVIUSUzRCUzRA; _ga_P8RWS72S79=GS1.1.1722773230.70.1.1722774327.0.0.0',
+            'priority': 'u=1, i',
+            'referer': 'https://hogangnono.com/apt/1ZQec/0/1',
+            'sec-ch-ua': '"Not)A;Brand";v="99", "Google Chrome";v="127", "Chromium";v="127"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-origin',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
+            'x-hogangnono-api-version': '1.9.20',
+            'x-hogangnono-app-name': 'hogangnono',
+            'x-hogangnono-at': 'B-VEzEDDnAr6CcP6k_SI0s2QqZ78PHXDpJkw',
+            'x-hogangnono-ct': '1722774332232',
+            'x-hogangnono-event-duration': '142252',
+            'x-hogangnono-event-log': '44578c82718af8a8ef158cabcda4e9f3c851259a',
+            'x-hogangnono-platform': 'desktop',
+            'x-hogangnono-release-version': '1.9.20.8',
+        }
+
+        params = {
+            'areaNo': areaNo,
+        }
+
+        response = requests.get(
+            f'https://hogangnono.com/api/v2/apts/{id}/monthly-reports/comparisons',
+            params=params,
+            cookies=cookies,
+            headers=headers,
+        )
+
+        result = response.json()
+        
+
+        if save :
+            
+            with open(os.path.join(hgnn.monthly_real_trade_folder, f'{id}_{areaNo}.json'), 'w', encoding='utf-8') as json_file:
+                json.dump(result, json_file, ensure_ascii=False, indent=4)
+                print('완료')
+
+        return result
+
+
+    def fetch_monthly_average_real_trade_by_id(self, id, save = True) :
+        valid_areaNos = self.get_valid_areaNo(id)
+        for valid_areaNo in valid_areaNos :
+            self.fetch_monthly_real_trade_single_areaNo(id, valid_areaNo, save=save)
+        
+
+
+    
+
 
 
     
